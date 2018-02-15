@@ -13,8 +13,24 @@ BigNum add(BigNum listOne, BigNum listTwo);
 BigNum multiply(BigNum listOne, BigNum listTwo);
 BigNum exponent(BigNum listOne, BigNum listTwo);
 
+void leakTest() {
+	Stack test;
+	for (int i = 0; i < 10000; i++) {
+		BigNum num;
+		num.addNum(1);
+		test.push(num);
+		BigNum num1 = test.pop();
+	}
+}
+
 int main()
 {
+	system("pause");
+	leakTest();
+	system("pause");
+
+
+
 	string input;
 	vector<string> tokens;
 	Stack bigNums;
@@ -83,7 +99,7 @@ int main()
 					BigNum num;
 					for (int i = 0; i < tokens[j].size(); i++) {
 						// checks to see if there is a non number in the value so it knows its an expression error
-						if (tokens[j].at(i) >= '0' && tokens[j].at(i) <= '9') { 
+						if (tokens[j].at(i) >= '0' && tokens[j].at(i) <= '9') {
 							num.addNum(tokens[j].at(i) - '0');
 						}
 						else {
@@ -99,7 +115,7 @@ int main()
 				cout << tokens[i] << " ";
 			}
 			cout << endl;
-			/*if there is too many numbers left or too many operations 
+			/*if there is too many numbers left or too many operations
 				were detected with not enough numbers print out an error and stop */
 			if (bigNums.lastPlace >= 2 || errorCount) {
 				cout << "Expression Error" << endl;
@@ -255,7 +271,7 @@ BigNum multiply(BigNum listOne, BigNum listTwo) {
 BigNum exponent(BigNum listOne, BigNum listTwo) {
 	//check to see if its to the 0
 	if (listTwo.head->number == 0) {
-		BigNum returner = BigNum();
+		BigNum returner;
 		returner.addNum(1);
 		return returner; //anything to the 0 is 1
 	}
@@ -272,9 +288,9 @@ BigNum exponent(BigNum listOne, BigNum listTwo) {
 			exponent.append(to_string(listTwoCurrent->number));
 			listTwoCurrent = listTwoCurrent->next;
 		}
-		for (int i = 0; i < stoi(exponent)-1; i++) {
-			BigNum value2 = multiply(value, listOne); //loop multiplcation of itself the given amount of times
-			value = value2;
+		for (int i = 0; i < stoi(exponent) - 1; i++) {
+			value = multiply(value, listOne); //loop multiplcation of itself the given amount of times
+			
 		}
 		return value;
 	}

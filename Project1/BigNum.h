@@ -1,6 +1,5 @@
 #pragma once
 #include <string>
-#include <array>
 #include <iostream>
 
 using namespace std;
@@ -16,16 +15,6 @@ public:
 		number = 0;
 		next = nullptr;
 		previous = nullptr;
-	}
-	//constructor to pass stuff and have values
-	Num(int newNumber, Num *newNext, Num *newPrevious) {
-		number = newNumber;
-		next = newNext;
-		previous = newPrevious;
-	}
-	//allow me to set the nextValue
-	void setNext(Num *newNext) {
-		next = newNext;
 	}
 };
 
@@ -46,7 +35,7 @@ public:
 			currentNum = currentNum->next;
 		}
 	}
-	void operator=(BigNum& copyMe) {
+	void operator=(const BigNum& copyMe) {
 		head = nullptr;
 		Num* currentNum = copyMe.head;
 		while (currentNum) {
@@ -56,9 +45,9 @@ public:
 	}
 	//add a number to the list of the bigNum
 	void addNum(int theNum) {
-		Num *newNum, *currentNum;
-		newNum = new Num();
-		newNum->number = (theNum);
+		Num *currentNum;
+		Num *newNum = new Num();
+		newNum->number = theNum;
 		if (!head) { //if head is null its easy
 			head = newNum;
 		}
@@ -74,8 +63,8 @@ public:
 	}
 	//this does the same thing as above but in reverse order. Fixes an inefficiency I had orignally
 	void addNumReverse(int theNum) {
-		Num *newNum, *currentNum;
-		newNum = new Num();
+		Num *currentNum;
+		Num *newNum = new Num();
 		newNum->number = (theNum);
 		if (!head) {
 			head = newNum;
@@ -90,7 +79,7 @@ public:
 			head = currentNum->previous;
 		}
 	}
-	//just ptrints out the digits
+	//just prints out the digits
 	void printBigNum() {
 		Num *current = head;
 		//print out stuff while we can
